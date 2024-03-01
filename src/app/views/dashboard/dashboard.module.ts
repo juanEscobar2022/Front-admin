@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -42,7 +42,9 @@ import { WidgetsModule } from '../widgets/widgets.module';
     TableModule,
     WidgetsModule
   ],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+
 })
 export class DashboardModule {
 }

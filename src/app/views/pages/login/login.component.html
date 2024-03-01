@@ -3,16 +3,16 @@
     <c-row class="justify-content-center">
       <c-col md="8">
         <c-card-group>
-          <c-card class="p-4">
+          <c-card class="p-2">
             <c-card-body>
-              <form cForm>
+              <form [formGroup]="loginForm">
                 <h1>Login</h1>
-                <p class="text-medium-emphasis">Sign In to your account</p>
+                <!-- <p class="text-medium-emphasis">Sign In to your account</p> -->
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input autoComplete="username"  formControlName="fuser" placeholder="Username" />
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
@@ -20,29 +20,38 @@
                   </span>
                   <input
                     autoComplete="current-password"
-                    cFormControl
+                    formControlName="fpass"
                     placeholder="Password"
                     type="password"
                   />
+                  <div *ngIf="loginForm.get('fpass').errors && loginForm.get('fpass').dirty" class="text-danger">
+                    <div *ngIf="loginForm.get('fpass').hasError('required')">La contraseña es obligatoria.</div>
+                    <div *ngIf="loginForm.get('fpass').hasError('minlength')">La contraseña debe tener al menos 8 caracteres.</div>
+                    <div *ngIf="loginForm.get('fpass').hasError('pattern')">La contraseña debe contener al menos un número, una letra mayúscula y un carácter especial.</div>
+                  </div>
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
+                    <button cButton class="px-4" color="primary" (click)="signin()">
                       Login
                     </button>
                   </c-col>
-                  <c-col class="text-right" xs="6">
+                  <!-- <c-col class="text-right" xs="6">
                     <button cButton class="px-0" color="link">
                       Forgot password?
                     </button>
-                  </c-col>
+                  </c-col> -->
                 </c-row>
               </form>
             </c-card-body>
           </c-card>
-          <c-card [ngStyle]="{'width.%': 44}" class="text-white bg-primary py-5">
-            <c-card-body class="text-center">
-              <div>
+          <c-card>
+            <img cCardImg="top" src="./assets/images/login.png" >
+
+            <!-- <c-card-body class="text-center"> -->
+              <!-- <img cCardImg="top" src="./assets/images/login.png"> -->
+
+              <!-- <div>
                 <h2>Sign up</h2>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -51,8 +60,8 @@
                 <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
                   Register Now!
                 </button>
-              </div>
-            </c-card-body>
+              </div> -->
+            <!-- </c-card-body> -->
           </c-card>
         </c-card-group>
       </c-col>

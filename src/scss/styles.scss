@@ -21,3 +21,24 @@ $enable-rtl: true;
 
 // If you want to add something do it here
 @import "custom";
+// @import '~@fortawesome/fontawesome-free/css/all.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.loading {
+    position: fixed;
+    z-index: 1011;
+    top: 50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.6);
+}
+.loading mat-spinner {
+    position: absolute;
+    top: calc( 50% - 25px);
+    left: calc( 50% - 25px);
+}
+div .text-right{
+    text-align: right
+}

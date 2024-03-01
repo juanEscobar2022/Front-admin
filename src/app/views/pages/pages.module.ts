@@ -8,11 +8,12 @@ import { Page404Component } from './page404/page404.component';
 import { Page500Component } from './page500/page500.component';
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
   declarations: [
-    LoginComponent,
+    // LoginComponent,
     RegisterComponent,
     Page404Component,
     Page500Component
@@ -24,7 +25,8 @@ import { IconModule } from '@coreui/icons-angular';
     ButtonModule,
     GridModule,
     IconModule,
-    FormModule
+    FormModule,
+    MatFormFieldModule
   ]
 })
 export class PagesModule {

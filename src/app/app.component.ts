@@ -22,11 +22,19 @@ export class AppComponent implements OnInit {
     iconSetService.icons = { ...iconSubset };
   }
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
+  //   this.router.events.subscribe((evt) => {
+  //     if (!(evt instanceof NavigationEnd)) {
+  //       return;
+  //     }
+  //   });
+  // }
+  ngOnInit() {
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
-      }
+      }                                                                
+      window.scrollTo(0, 0);
     });
   }
 }
