@@ -106,7 +106,7 @@ export class DefaultLayoutComponent {
     var optionItem;
     var optionSubitem;
     var op = {
-      name: "TH 360 / " + this.userLogin.userProfile,
+      name: "ADMIN/ " + this.userLogin.userProfile,
       url: "/dashboard",
     };
     var title = {
