@@ -59,6 +59,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
+import { LoginServices } from './services/login.service';
 
 
 
@@ -134,7 +135,7 @@ const APP_CONTAINERS = [
       useClass: HashLocationStrategy
     },
     Tools,
-
+    LoginServices,
     IconSetService,
     Title,
     DatePipe,

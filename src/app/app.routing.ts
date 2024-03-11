@@ -5,6 +5,7 @@ import { DefaultLayoutComponent } from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
 import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
+import { AuthGuard } from './auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -12,12 +13,6 @@ const routes: Routes = [
     redirectTo: "login",
     pathMatch: "full",
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full'
-  // },
- 
   {
     path: "login",
     component: LoginComponent,
@@ -38,6 +33,7 @@ const routes: Routes = [
     data: {
       title: 'Home'
     },
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',

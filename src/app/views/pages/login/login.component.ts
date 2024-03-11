@@ -69,7 +69,6 @@ export class LoginComponent {
     if (this.cuser != null) {
       
       this.WebApiService.token = this.cuser.token;
-      console.log(this.WebApiService.token);
       
       if (
         this.cuser.user != null &&
@@ -93,39 +92,39 @@ export class LoginComponent {
     }
   }
 
-  onSubmit() {
-    this.validateUser = true;
+  // onSubmit() {
+  //   this.validateUser = true;
 
-    this._loginService.login(this.loginData).subscribe(
-      (response) => {
-        this.identity = response.resultado.response;
-        this.token = response.resultado.token;
-        console.log(this.token);
-        console.log(this.token);
+  //   this._loginService.login(this.loginData).subscribe(
+  //     (response) => {
+  //       this.identity = response.resultado.response;
+  //       this.token = response.resultado.token;
+  //       console.log(this.token);
+  //       console.log(this.token);
         
-        // PERSISTIR USUARIO
-        localStorage.setItem("identity", JSON.stringify(this.identity));
-        localStorage.setItem("token", JSON.stringify(this.token));
-        // localStorage.setItem("cantNoti", "0");
+  //       // PERSISTIR USUARIO
+  //       localStorage.setItem("identity", JSON.stringify(this.identity));
+  //       localStorage.setItem("token", JSON.stringify(this.token));
+  //       // localStorage.setItem("cantNoti", "0");
 
-        // redrigir pagina
-        this._router.navigate(["./dashboard"]);
-      },
-      (error) => {
-        //console.log(error);
-        if (error.status == 500) {
-          this._tools.showNotify("error", "PERSONALE", "Error interno");
-        }
-        if (error.status == 404) {
-          this._tools.showNotify(
-            "error",
-            "PERSONALE",
-            <any>error.error.resultado
-          );
-        }
-      }
-    );
-  }
+  //       // redrigir pagina
+  //       this._router.navigate(["./dashboard"]);
+  //     },
+  //     (error) => {
+  //       //console.log(error);
+  //       if (error.status == 500) {
+  //         this._tools.showNotify("error", "PERSONALE", "Error interno");
+  //       }
+  //       if (error.status == 404) {
+  //         this._tools.showNotify(
+  //           "error",
+  //           "PERSONALE",
+  //           <any>error.error.resultado
+  //         );
+  //       }
+  //     }
+  //   );
+  // }
 
   signin() {
     if (this.loginForm.valid) {
@@ -135,7 +134,8 @@ export class LoginComponent {
         };
 
         this.loading = true;
-        this.WebApiService.postRequest("/login", body, {}).subscribe(
+        // this.WebApiService.postRequest("/login", body, {}).subscribe(
+          this._loginService.login( body).subscribe(
             (data) => {
                 if (data.success == true && data.info == false) {
                     let objData = {

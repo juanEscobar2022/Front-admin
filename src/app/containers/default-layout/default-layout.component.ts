@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Tools } from 'src/app/Tools/tools.page';
 import { HandlerAppService } from 'src/app/services/handler-app.service';
 import { WebApiService } from "../../services/web-api.service";
+import { NavItem } from '../../models/nav-item.interface'; 
 import {
   MatDialog,
   MatDialogRef,
@@ -20,26 +21,25 @@ import {
 })
 export class DefaultLayoutComponent {
 
-  // public navItems = navItems;
-  public navItems:any = [];
+  navItems: NavItem[] = [];
   public identity;
   public token;
   public cuser:any;
   public userLogin;
   endpoint: string = "/menu";
   public item: any;
-  public subitem: any;
+  public subitem:any;
   public loading: boolean = false;
-
   public isLogged: boolean=false;
   public permissions: any[] = Array();
+
 
   constructor(
     private _tools: Tools,
     private _router: Router,
     private WebApiService: WebApiService,
     public dialog: MatDialog,
-    private handler: HandlerAppService
+    private handler: HandlerAppService,
   ) {
     this.identity = _tools.getIdentity();
     this.token = _tools.getToken();
@@ -49,7 +49,6 @@ export class DefaultLayoutComponent {
     if (userLogin !== null) {
         this.userLogin = JSON.parse(userLogin);
     }
-    
   }
 
   ngOnInit(): void {
@@ -72,6 +71,7 @@ export class DefaultLayoutComponent {
           this.item = response.data[0];
           this.subitem = response.data[1];
           this.navItems = this.checkMenu(this.item, this.subitem);
+          
           this.handler.permissions = this.getpermissionsSaved(this.subitem);
           this.loading = false;
         } else {
@@ -101,45 +101,54 @@ export class DefaultLayoutComponent {
     return permision;
   }
 
-  checkMenu(item: any, subitem: any) {
-    var option = [];
-    var optionItem;
-    var optionSubitem;
-    var op = {
-      name: "ADMIN/ " + this.userLogin.userProfile,
-      url: "/dashboard",
-    };
-    var title = {
-      title: true,
-      name: this.userLogin.user,
-    };
-    option.push(op);
-    option.push(title);
-  
-    item.forEach(function (value: any) {
-      var children: { name: string, url: string, icon: string }[] = []; // Declara el tipo de los elementos del array children
-      subitem.forEach(function (row: any) {
-        if (value.id == row.item) {
-          optionSubitem = {
-            name: row.name,
-            url: row.url,
-            icon: "",
-          };
-          children.push(optionSubitem);
-        }
-      });
-      optionItem = {
-        name: value.item,
-        url: "/admin",
-        icon: value.icon,
-        children: children, // Agrega children al objeto optionItem
-      };
-      option.push(optionItem);
+
+checkMenu(item: any[], subitem: any[]): NavItem[] {
+  const options: NavItem[] = [];
+
+  // Agregar el primer elemento "ADMIN/ UserProfile"
+  const adminProfileItem: NavItem = {
+    name: `ADMIN/ ${this.userLogin.userProfile}`,
+    url: '/dashboard'
+  };
+  options.push(adminProfileItem);
+
+  // Agregar el título con el nombre de usuario
+  const titleItem: NavItem = {
+    title: true,
+    name: this.userLogin.user,
+    url: ''
+  };
+  options.push(titleItem);
+
+  // Iterar sobre los elementos de "item"
+  item.forEach((value: any) => {
+    const children: NavItem[] = [];
+
+    // Iterar sobre los elementos de "subitem"
+    subitem.forEach((row: any) => {
+      if (value.id === row.item) {
+        const subItem: NavItem = {
+          name: row.name,
+          url: row.url,
+          icon: row.icon
+        };
+        children.push(subItem);
+      }
     });
-  
-    return option;
-  }
-  
+
+    // Crear el elemento de menú principal
+    const menuItem: NavItem = {
+      name: value.item,
+      url: '/admin',
+      icon: value.icon,
+      children: children
+    };
+
+    options.push(menuItem);
+  });
+
+  return options;
+}
 
   checkSession() {
     // ejecutar consulta al servidor para verificar si el token es valido aun...
@@ -170,6 +179,7 @@ export class DefaultLayoutComponent {
 
             if (route == "/") {
               this._router.navigate(["dashboard"]);
+
             } else {
               this._router.navigate([route]);
             }
@@ -209,4 +219,5 @@ export class DefaultLayoutComponent {
       }
   }
 }
+
 }
